@@ -2,7 +2,7 @@ import os
 
 
 def create_path(path: str, file_name: str):
-    from .get_logger import logger   # Ленивый импорт
+    from utils.get_logger import logger   # Ленивый импорт
 
     project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     logs_dir = os.path.join(project_root, path)

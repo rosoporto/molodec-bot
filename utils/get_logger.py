@@ -1,6 +1,6 @@
 import logging
 from logging.handlers import RotatingFileHandler
-from .create_path import create_path
+from utils.create_path import create_path
 
 
 # Настройка логгера
@@ -17,7 +17,10 @@ formatter = logging.Formatter(
 log_file_path = create_path("logs", "app.log")
 
 file_handler = RotatingFileHandler(
-    log_file_path, maxBytes=1024*1024, backupCount=5
+    log_file_path,
+    maxBytes=1024*1024,
+    backupCount=5,
+    encoding="UTF-8"
 )  # 1 MB per file, 5 backups
 
 file_handler.setFormatter(formatter)
