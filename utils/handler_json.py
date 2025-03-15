@@ -42,9 +42,6 @@ if __name__ == "__main__":
             "last_date": ""
         },
     }
-    json_file_name = config.DATA_USERS
-    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    json_file = os.path.join(project_root, json_file_name)
 
     handler_json = HandlerJson()
     print(f"handler_json: {handler_json.load_data}")
