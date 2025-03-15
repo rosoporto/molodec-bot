@@ -28,3 +28,5 @@ users.json
 # Документация и прочие ненужные файлы
 *.md
 *.txt
+
+!requirements.txt
