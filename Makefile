@@ -4,17 +4,20 @@ run:
 load_json:
 	python3 -m utils.handler_json
 
-docker_build:
-	docker build -t molodec-bot .
+docker_up:
+	docker-compose up -d --build
 
-run_container:
-	docker run --rm -v $(pwd)/base:/app/base -v $(pwd)/logs:/app/logs -v $(pwd)/.env:/app/.env molodec-bot
+docker_run:
+	docker-compose up -d
 
-run_container_light:
-	docker run --rm molodec-bot
+docker_start:
+	docker-compose start
 
-docker_build_compose:
-	docker-compose up --build
+docker_stop:
+	docker-compose stop
 
-docker_compose_dowb:
+docker_down:
 	docker-compose down
+
+docker_logs:
+	docker-compose logs -f

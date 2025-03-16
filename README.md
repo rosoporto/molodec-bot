@@ -12,8 +12,10 @@
 
 ## Требования
 - Python 3.12+
-- Docker (для контейнеризации)
-- Git (для работы с репозиторием)
+- Docker
+- Docker Compose
+- Git
+- Make
 
 ## Установка и запуск локально
 
@@ -25,11 +27,14 @@ cd molodec-bot
 
 ### 2. Настройка окружения
 
-#### Создай файл `.env` в корне проекта:
+#### Создай файл `.env` в корне проекта и добавь токен бота и свои UID/GID:
 ```text
 TG_TOKEN=your-telegram-bot-token
+UID=1000  # Замени на твой UID (id -u)
+GID=1000  # Замени на твой GID (id -g)
 ```
 Получи токен у @BotFather в Telegram.
+Cвои UID/GID узнай командами: UID (id -u), GID (id -g)
 
 ### 3. Установи зависимости:
 ```bash
@@ -41,49 +46,62 @@ pip install -r requirements.txt
 make run
 ```
 или на прямую
+
 ```bash
 python3 -m bot
 ```
 
 ## Запуск в Docker
 
-### 1. Сборка образа:
-
+### 1. Запуск бота одной командой:
 ```bash
-docker build -t molodec-bot .
+make docker_up
 ```
 
-### 2. Запуск контейнера:
-```bash
-docker run --rm -v $(pwd)/base:/app/base -v $(pwd)/logs:/app/logs -v $(pwd)/.env:/app/.env molodec-bot
-```
+Убедись, что Docker и Docker Compose установлены.
+Бот автоматически создаст необходимые директории (`base/` и `logs/`) и начнёт работу.
 
-Убедись, что папки `base/` и `logs/` существуют, или создай их:
+### 2. Проверка
+Открой Telegram, найди бота и отправь `/start`.
 
-```bash
-mkdir -p base logs
-```
+## Управление
 
-### 3. Проверка
-Бот должен отвечать в Telegram, а логи записываться в `logs/app.log`.
-
-## Использование Docker Compose
-1. Убедись, что `docker-compose.yml` есть в проекте.
-2. Запусти:
+Посмотреть логи:
 
 ```bash
-docker-compose up --build
+make docker_logs
 ```
 
-3. Останови:
+Остановить (с сохранением состояния):
 
 ```bash
-docker-compose down
+make docker_stop
 ```
 
-## Тестирование
-1. Используй команды: `/new_habit`, `/done`, `/skip`, `/progress`.
-2. Проверяй логи в `logs/app.log` и данные в `base/users.json`.
+Возобновить (с сохранением состояния):
+
+```bash
+make docker_start
+```
+
+Полная остановка и удаление:
+
+```bash
+make docker_down
+```
+
+## Возможности
+
+`/new_habit` — добавить привычку.
+`/done` — отметить выполнение.
+`/skip` — пропустить день.
+`/progress` — посмотреть прогресс.
+
+
+## Примечания
+Логи сохраняются в `logs/app.log`.
+Данные пользователей — в `base/users.json`.
+`.dockerignore` исключает ненужные файлы из образа.
 
 ## Связь с автором проекта:
 Создано @rosoporo. Свяжитесь через [Telegram](https://t.me/rosoporo)
